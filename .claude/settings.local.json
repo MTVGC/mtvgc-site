@@ -5,7 +5,9 @@
       "Bash(curl:*)",
       "Bash(cd C:/Users/vvanp/mtvgc-site && npm run dev 2>&1)",
       "Bash(cd /c/Users/vvanp/mtvgc-site && npm run build 2>&1)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(gh repo:*)",
+      "Bash(npx vercel:*)"
     ]
   }
 }
