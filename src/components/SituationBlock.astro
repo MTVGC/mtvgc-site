@@ -1,0 +1,124 @@
+---
+interface Proof {
+  client: string;
+  detail: string;
+}
+
+interface Props {
+  title: string;
+  accroche: string;
+  actions: string[];
+  preuves: Proof[];
+}
+
+const { title, accroche, actions, preuves } = Astro.props;
+---
+
+<div class="situation-block">
+  <h3 class="block-title">{title}</h3>
+  <p class="block-accroche">{accroche}</p>
+
+  <div class="block-section">
+    <h4>Ce que je fais</h4>
+    <div class="block-actions">
+      {actions.map(a => (
+        <div class="action-item">{a}</div>
+      ))}
+    </div>
+  </div>
+
+  <div class="block-section">
+    <h4>Preuves</h4>
+    <div class="block-preuves">
+      {preuves.map(p => (
+        <div class="preuve card">
+          <span class="preuve-client">{p.client}</span>
+          <p class="preuve-detail">{p.detail}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .situation-block {
+    padding: 0;
+  }
+
+  .block-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-bright);
+  }
+
+  .block-accroche {
+    color: var(--color-text);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 70ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .block-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .block-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .block-section h4 {
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    margin-bottom: 1.25rem;
+  }
+
+  .block-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .action-item {
+    padding: 0.85rem 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    transition: all var(--transition-base);
+  }
+
+  .action-item:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-hover);
+  }
+
+  .block-preuves {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .preuve {
+  }
+
+  .preuve-client {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .preuve-detail {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>

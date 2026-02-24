@@ -1,0 +1,155 @@
+---
+interface Metric {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  preTitle?: string;
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  ctaSecondaryText?: string;
+  ctaSecondaryHref?: string;
+  metrics?: Metric[];
+}
+
+const {
+  preTitle,
+  title,
+  subtitle,
+  ctaText,
+  ctaHref,
+  ctaSecondaryText,
+  ctaSecondaryHref,
+  metrics = [],
+} = Astro.props;
+---
+
+<section class="hero">
+  <div class="container hero-inner">
+    {preTitle && <p class="hero-pre">{preTitle}</p>}
+    <h1 set:html={title} />
+    {subtitle && <p class="hero-sub">{subtitle}</p>}
+
+    {(ctaText || ctaSecondaryText) && (
+      <div class="hero-actions">
+        {ctaText && ctaHref && (
+          <a href={ctaHref} class="btn btn-primary">{ctaText}</a>
+        )}
+        {ctaSecondaryText && ctaSecondaryHref && (
+          <a href={ctaSecondaryHref} class="btn btn-outline">{ctaSecondaryText}</a>
+        )}
+      </div>
+    )}
+
+    {metrics.length > 0 && (
+      <div class="hero-metrics">
+        {metrics.map(m => (
+          <div class="metric">
+            <span class="metric-value">{m.value}</span>
+            <span class="metric-label">{m.label}</span>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 9rem 0 4rem;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-pre {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    margin-bottom: 1.25rem;
+    max-width: 750px;
+  }
+
+  .hero-sub {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    max-width: 580px;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3.5rem;
+  }
+
+  /* Metrics bar */
+  .hero-metrics {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2.25rem 3.5rem;
+    background: linear-gradient(135deg, rgba(0, 153, 255, 0.08), rgba(0, 153, 255, 0.03));
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: var(--radius);
+    box-shadow: 0 0 40px rgba(0, 153, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 120px;
+  }
+
+  .metric-value {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-primary);
+    text-shadow: 0 0 20px rgba(0, 153, 255, 0.3);
+  }
+
+  .metric-label {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 8rem 0 3rem;
+    }
+
+    .hero-metrics {
+      gap: 1.5rem;
+      padding: 1.5rem 1.75rem;
+    }
+
+    .metric {
+      min-width: 90px;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+    }
+  }
+</style>

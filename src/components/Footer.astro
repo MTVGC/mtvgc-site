@@ -1,0 +1,102 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-left">
+      <p class="footer-name">Vincent Van - MTV Global Consulting</p>
+      <p class="footer-legal">SASU - Management de transition Produit & Data</p>
+    </div>
+
+    <div class="footer-right">
+      <a href="https://linkedin.com/in/" target="_blank" rel="noopener">LinkedIn</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:contact@mtvglobalconsulting.com">contact@mtvglobalconsulting.com</a>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {year} MTV Global Consulting</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding: 3rem 0 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-name {
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-legal {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .footer-right a {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-right a:hover {
+    color: var(--color-primary);
+  }
+
+  .footer-sep {
+    color: var(--color-border);
+    font-size: 0.8rem;
+  }
+
+  .footer-bottom {
+    width: 100%;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .footer-bottom p {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-right {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-sep {
+      display: none;
+    }
+  }
+</style>

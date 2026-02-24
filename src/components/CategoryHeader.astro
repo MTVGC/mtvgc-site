@@ -1,0 +1,35 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<div class="cat-header">
+  <h2 class="cat-title">{title}</h2>
+  {subtitle && <p class="cat-subtitle">{subtitle}</p>}
+</div>
+
+<style>
+  .cat-header {
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 2rem;
+  }
+
+  .cat-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-primary);
+  }
+
+  .cat-subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+  }
+</style>

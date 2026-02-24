@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SituationBlock from '../components/SituationBlock.astro';
+---
+
+<BaseLayout title="Situations d'intervention" description="Vacance de poste, levée de fonds, risque réglementaire - quand faire appel à un manager de transition Produit & Data.">
+
+  <section class="hero-sm">
+    <div class="container">
+      <p class="hero-pre">Situations</p>
+      <h1>Les situations où <span class="text-gradient">j'interviens</span></h1>
+      <p class="hero-sub">
+        Chaque mission commence par un contexte de pression.
+        Voici les trois que je rencontre le plus souvent.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container situations-content">
+
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-leadership" data-tab="tab-leadership">
+          Absence de leadership
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-levee" data-tab="tab-levee">
+          Avant levée de fonds
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-reglementaire" data-tab="tab-reglementaire">
+          Risque réglementaire
+        </button>
+      </div>
+
+      <div id="tab-leadership" class="tab-panel active" role="tabpanel">
+        <SituationBlock
+          title="Absence de leadership Produit & Data"
+          accroche="Départ brutal d'un responsable, programme de transformation sans pilote, équipe en forte croissance qui a besoin d'être structurée avant de déraper. Dans tous ces cas, l'organisation avance sans cap produit ou data - et chaque semaine sans leadership coûte."
+          actions={[
+            "Opérationnel J+1, sans temps de montée en charge",
+            "Diagnostic livré en semaine 2 : état réel, risques, plan d'action au COMEX",
+            "Pilotage delivery : rituels, priorisation, arbitrages",
+            "Manager de managers si nécessaire : cadre clair, OKR par lead, équipes locales autonomes",
+            "Transfert structuré avant la sortie - l'organisation repart sans dépendance",
+          ]}
+          preuves={[
+            { client: "Anaxago", detail: "Aucun CPTO à l'arrivée, équipe 12 sans direction. KYC 48h à 2h. 0 incident AMF/ACPR sur 14 mois." },
+            { client: "Kering", detail: "5 leads managés sur 3 pays (Paris, London, Milan). Disponibilité 85% à 98%." },
+            { client: "Pricehubble", detail: "0 profil product-data sur 50+ personnes, roadmaps décorrélées, delivery figé. Erreur de valorisation 15% à 7%. 99%+ uptime. Scalabilité 12 pays." },
+          ]}
+        />
+      </div>
+
+      <div id="tab-levee" class="tab-panel" role="tabpanel">
+        <SituationBlock
+          title="Avant levée de fonds"
+          accroche="Votre Série A approche. Les investisseurs attendent une démonstration produit ou data convaincante. La deadline ne bouge pas."
+          actions={[
+            "Cadrage semaine 1 : ce que les investisseurs attendent concrètement (démo produit, architecture data, métriques de traction)",
+            "POC IA ou démonstrateur spécifié, priorisé et livré dans les délais",
+            "Roadmap structurée pour le pitch : jalons clairs, hypothèses documentées, chiffres défendables",
+            "Architecture data auditée et documentée pour la due diligence",
+            "Narratif investisseur aligné avec le delivery technique",
+          ]}
+          preuves={[
+            { client: "Family Partners", detail: "0 structure produit à l'arrivée, 3 produits propriétaires en backlog actif + POC IA livré comme démonstrateur Série A. Reporting 72h à 24h. 0 incident réglementaire." },
+          ]}
+        />
+      </div>
+
+      <div id="tab-reglementaire" class="tab-panel" role="tabpanel">
+        <SituationBlock
+          title="Risque réglementaire"
+          accroche="AMF, ACPR, GDPR. Un audit approche, une non-conformité a été identifiée, ou votre architecture data n'est pas documentée. Le risque est réel."
+          actions={[
+            "Audit réglementaire immédiat : cartographie des risques AMF/ACPR/GDPR, priorisation par niveau de criticité",
+            "Remédiation opérationnelle : chiffrement, audit trails, registre des traitements, droit à l'oubli",
+            "Dashboard conformité temps réel : monitoring continu, 0 angle mort",
+            "Coordination Compliance + Engineering + Legal sur chaque évolution",
+            "Playbooks livrés à la sortie : vos équipes tiennent sans moi",
+          ]}
+          preuves={[
+            { client: "Family Partners", detail: "GDPR compliance from scratch, données patrimoniales AMF, 0 incident réglementaire." },
+            { client: "Anaxago", detail: "0 incident AMF/ACPR sur 14 mois, 95% validation automatique, documentation complète livrée à la sortie." },
+          ]}
+        />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container cta-inner">
+      <h2>Votre situation ressemble à l'une de ces trois ?</h2>
+      <p class="section-subtitle">
+        Décrivez-la moi en 3 lignes. Je reviens sous 24h - sans engagement.
+      </p>
+      <a href="/contact" class="btn btn-primary">Parler de votre situation</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.getAttribute('data-tab');
+      if (!tabId) return;
+
+      // Update buttons
+      btn.closest('.tabs')?.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      // Update panels
+      const container = btn.closest('.tabs')?.parentElement;
+      container?.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      container?.querySelector(`#${tabId}`)?.classList.add('active');
+    });
+  });
+</script>
+
+<style>
+  .hero-sm {
+    padding: 9rem 0 3rem;
+  }
+
+  .hero-pre {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 550px;
+    margin-top: 0.75rem;
+  }
+
+  .situations-content {
+    max-width: 960px;
+  }
+
+  .cta-section {
+    text-align: center;
+  }
+
+  .cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-inner .section-subtitle {
+    margin-top: 0.5rem;
+  }
+</style>

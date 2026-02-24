@@ -1,0 +1,192 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="À propos" description="Vincent Van - Directeur Produit & Data en management de transition. 12 ans, 8 missions, double compétence stratégique et technique, MIT Sloan.">
+
+  <section class="hero-sm">
+    <div class="container">
+      <p class="hero-pre">À propos</p>
+      <h1>Directeur Produit & Data en <span class="text-gradient">management de transition</span></h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-content">
+
+      <!-- Photo placeholder + intro -->
+      <div class="intro-row">
+        <div class="avatar" aria-hidden="true">VV</div>
+        <div class="intro-text">
+          <p>
+            Votre organisation avance sans cap produit ou data - départ brutal,
+            transformation sans pilote, levée qui approche, risque réglementaire
+            imminent. Ces situations ne peuvent pas attendre le temps d'un recrutement.
+          </p>
+          <p class="intro-strong">
+            J'interviens pour les résoudre - opérationnel J+1, diagnostic structuré
+            en semaine 2.
+          </p>
+        </div>
+      </div>
+
+      <!-- Double compétence -->
+      <div class="about-block">
+        <h2>La double compétence</h2>
+        <p>
+          La double compétence stratégique et technique est le coeur de chaque mission.
+          Présenter une vision au COMEX le matin, auditer une architecture de données
+          l'après-midi - cette polyvalence évite les pertes de traduction entre équipes
+          techniques et management, et accélère les missions complexes.
+        </p>
+      </div>
+
+      <!-- Preuves -->
+      <div class="about-block">
+        <h2>Résultats</h2>
+        <p>
+          8 missions livrées. 0 incident réglementaire. Des équipes remises en mouvement,
+          des produits livrés, des organisations prêtes pour la suite.
+        </p>
+      </div>
+
+      <!-- Certifications -->
+      <div class="about-block">
+        <h2>Certifications & compétences</h2>
+        <div class="badges">
+          <span class="badge">MIT Sloan - AI Strategy</span>
+          <span class="badge">SAFe</span>
+          <span class="badge">AMF / ACPR / GDPR</span>
+          <span class="badge">Bilingue FR/EN C2</span>
+        </div>
+      </div>
+
+      <!-- MTV -->
+      <div class="about-block">
+        <h2>MTV Global Consulting</h2>
+        <p>
+          J'interviens via MTV Global Consulting, SASU de conseil opérationnel
+          basée en France.
+        </p>
+      </div>
+
+      <!-- CTA -->
+      <div class="about-cta">
+        <p>
+          Votre situation nécessite une prise en main rapide ? Décrivez-la moi en
+          3 lignes. Je reviens sous 24h - sans engagement.
+        </p>
+        <a href="/contact" class="btn btn-primary">Parler de votre situation</a>
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .hero-sm {
+    padding: 9rem 0 3rem;
+  }
+
+  .hero-pre {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .about-content {
+    max-width: 960px;
+  }
+
+  /* Avatar + intro */
+  .intro-row {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+  }
+
+  .avatar {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: #fff;
+  }
+
+  .intro-text p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .intro-strong {
+    color: var(--color-text-bright);
+    font-weight: 500;
+  }
+
+  /* Blocks */
+  .about-block {
+    margin-bottom: 2.5rem;
+  }
+
+  .about-block h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-block p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  /* Badges */
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--color-accent-glow);
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: 20px;
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+  }
+
+  /* CTA */
+  .about-cta {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .about-cta p {
+    font-size: 1.02rem;
+    margin-bottom: 1.25rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .intro-row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MissionFull from '../components/MissionFull.astro';
+---
+
+<BaseLayout title="Missions" description="8 missions livrées en management de transition Produit & Data - Family Partners, Anaxago, Kering, Pricehubble, Lucky Cart.">
+
+  <section class="hero-sm">
+    <div class="container">
+      <p class="hero-pre">Missions</p>
+      <h1>Résultats <span class="text-gradient">concrets</span></h1>
+      <p class="hero-sub">
+        8 missions livrées. À chaque fois, une organisation plus solide,
+        une équipe plus autonome, des résultats qui tiennent après mon départ.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container missions-content">
+
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-transition" data-tab="tab-transition">
+          Missions de transition
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-direction" data-tab="tab-direction">
+          Directions produit & data
+        </button>
+      </div>
+
+      <div id="tab-transition" class="tab-panel active" role="tabpanel">
+        <p class="tab-desc">Remplacement immédiat d'un dirigeant Produit ou Data</p>
+        <div class="missions-list">
+          <MissionFull
+            client="Family Partners"
+            sector="Wealthtech / Family Office"
+            date="2024"
+            title="CPTO de transition in extremis"
+            context="0 structure produit, levée Série A à préparer, conformité AMF sur données patrimoniales."
+            results={[
+              "0 → 3 produits en backlog actif",
+              "POC IA livré comme démonstrateur Série A",
+              "Reporting 72h → 24h",
+              "0 incident réglementaire. GDPR compliance documentée.",
+            ]}
+          />
+
+          <MissionFull
+            client="Anaxago"
+            sector="Fintech"
+            date="2022-2023"
+            title="Head of Product de transition - 14 mois"
+            context="Aucun CPTO à l'arrivée, équipe 12 sans cap, conformité AMF/ACPR à risque."
+            results={[
+              "KYC 48h → 2h (-96%)",
+              "80% approbations automatiques",
+              "0 incident AMF/ACPR sur 14 mois",
+              "ML scoring AUC 0.87. Architecture 5 sources.",
+            ]}
+          />
+
+          <MissionFull
+            client="Kering"
+            sector="Luxe CAC40"
+            date="2021"
+            title="Programme de transformation - 9 mois"
+            context="Migration cloud 15 apps legacy, pilote datamesh, 5 leads sur 3 pays."
+            results={[
+              "Disponibilité 85% → 98%",
+              "-40% temps de traitement",
+              "15 applications migrées GCP",
+              "0 incident critique sur 9 mois",
+            ]}
+          />
+        </div>
+      </div>
+
+      <div id="tab-direction" class="tab-panel" role="tabpanel">
+        <p class="tab-desc">Pilotage long terme de l'organisation produit et data</p>
+        <div class="missions-list">
+          <MissionFull
+            client="Pricehubble"
+            sector="Proptech B2B - Zurich"
+            date="12/2021 - 01/2023"
+            title="Lead Data Product Manager - 18 mois"
+            context="50+ personnes tech, 0 profil product-data, SLA contractuels à risque sur 3 marchés."
+            results={[
+              "Erreur de valorisation 15% → 7%",
+              "99%+ uptime, 10k+ propriétés/jour, latence <1h",
+              "Scalabilité 12 pays, pénétration marché UK",
+              "SLA contractuels maintenus sur toute la mission",
+            ]}
+          />
+
+          <MissionFull
+            client="Lucky Cart"
+            sector="Retail Tech SaaS - Paris"
+            date="09/2023 - 12/2024"
+            title="Head of Product - Moteur de recommandation IA"
+            context="Moteur de recommandation IA 0-to-1, 4 squads, 8 retailers, 2M+ utilisateurs."
+            results={[
+              "120k€ ARR en 6 mois",
+              "Adoption nationale Intermarché",
+              "Lead time campagnes -33%",
+              "Satisfaction client 4.2/5. 0 incident critique.",
+            ]}
+          />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container cta-inner">
+      <h2>Votre contexte ressemble à l'une de ces missions ?</h2>
+      <p class="section-subtitle">
+        Décrivez-moi votre situation en 3 lignes. Je reviens sous 24h.
+      </p>
+      <a href="/contact" class="btn btn-primary">Parler de votre situation</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.getAttribute('data-tab');
+      if (!tabId) return;
+
+      btn.closest('.tabs')?.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const container = btn.closest('.tabs')?.parentElement;
+      container?.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      container?.querySelector(`#${tabId}`)?.classList.add('active');
+    });
+  });
+</script>
+
+<style>
+  .hero-sm {
+    padding: 9rem 0 3rem;
+  }
+
+  .hero-pre {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 580px;
+    margin-top: 0.75rem;
+  }
+
+  .missions-content {
+    max-width: 960px;
+  }
+
+  .tab-desc {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .missions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .cta-section {
+    text-align: center;
+  }
+
+  .cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-inner .section-subtitle {
+    margin-top: 0.5rem;
+  }
+</style>

@@ -1,17 +1,140 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SituationCard from '../components/SituationCard.astro';
+import MissionCard from '../components/MissionCard.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Management de transition Produit & Data">
+
+  <HeroSection
+    preTitle="MTV Global Consulting"
+    title='Management de transition Produit & Data --<br /><span class="text-gradient">opérationnel J+1</span>'
+    subtitle="Fintech & wealthtech Série A-C. Vacance de poste, levée de fonds, risque réglementaire. Diagnostic semaine 2, delivery immédiat."
+    ctaText="Parler de votre situation"
+    ctaHref="/contact"
+    ctaSecondaryText="Voir les missions"
+    ctaSecondaryHref="/missions"
+    metrics={[
+      { value: "-96%", label: "KYC 48h à 2h" },
+      { value: "0", label: "Incident AMF/ACPR" },
+      { value: "8", label: "Missions" },
+      { value: "12 ans", label: "Expérience" },
+    ]}
+  />
+
+  <!-- Situations d'intervention -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Quand intervenir</h2>
+      <p class="section-subtitle">
+        Trois situations où un management de transition change la donne.
+      </p>
+      <div class="grid-3">
+        <SituationCard
+          icon="&#9673;"
+          title="Vacance de poste senior"
+          description="Votre Head of Product est parti, vous ne pouvez pas attendre 3 mois. Opérationnel J+1, continuité garantie."
+          link="/situations"
+        />
+        <SituationCard
+          icon="&#9650;"
+          title="Avant levée de fonds"
+          description="POC IA à livrer, roadmap investisseurs à structurer, deadline non négociable."
+          link="/situations"
+        />
+        <SituationCard
+          icon="&#9670;"
+          title="Risque réglementaire"
+          description="AMF, ACPR, GDPR. Audit, remédiation, 0 incident."
+          link="/situations"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Missions (aperçu) -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Missions récentes</h2>
+      <p class="section-subtitle">
+        Résultats mesurables sur des missions de 6 à 18 mois.
+      </p>
+      <div class="grid-3 missions-grid">
+        <MissionCard
+          client="Family Partners"
+          sector="Wealthtech / Family Office"
+          role="Head of Product & Data (transition)"
+          description="Structuration produit de 0 à 3 produits lancés, dont un POC IA pour préparer la Série A."
+          metrics={[
+            { value: "0 à 3", label: "Produits lancés" },
+            { value: "POC IA", label: "Série A" },
+            { value: "6 mois", label: "Durée mission" },
+          ]}
+        />
+        <MissionCard
+          client="Anaxago"
+          sector="Fintech"
+          role="Head of Product & Data (transition)"
+          description="Refonte du parcours KYC, mise en conformité AMF/ACPR, stabilisation plateforme."
+          metrics={[
+            { value: "48h à 2h", label: "KYC" },
+            { value: "0 incident", label: "AMF/ACPR 14 mois" },
+            { value: "85% à 98%", label: "Disponibilité" },
+          ]}
+        />
+        <MissionCard
+          client="Lucky Cart"
+          sector="Retail Tech / IA"
+          role="VP Product (transition)"
+          description="Lancement offre data monétisation, structuration de 4 squads produit, croissance ARR."
+          metrics={[
+            { value: "120k EUR", label: "ARR en 4 mois" },
+            { value: "4 squads", label: "Structurées" },
+            { value: "72h à 24h", label: "Reporting" },
+          ]}
+        />
+      </div>
+      <div class="section-cta">
+        <a href="/missions" class="btn btn-outline">Toutes les missions &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="section section-alt cta-final">
+    <div class="container cta-final-inner">
+      <h2>Votre situation ressemble à l'une de ces missions ?</h2>
+      <p class="section-subtitle">
+        Premier échange sans engagement. Je reviens sous 24h.
+      </p>
+      <a href="/contact" class="btn btn-primary">Parler de votre situation</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .missions-grid {
+    margin-bottom: 0;
+  }
+
+  .section-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  .cta-final {
+    text-align: center;
+  }
+
+  .cta-final-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-final-inner .section-subtitle {
+    margin-top: 0.5rem;
+  }
+</style>
