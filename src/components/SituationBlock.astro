@@ -20,23 +20,23 @@ const { title, accroche, actions, preuves } = Astro.props;
 
   <div class="block-section">
     <h4>Ce que je fais</h4>
-    <div class="block-actions">
+    <ul class="block-actions">
       {actions.map(a => (
-        <div class="action-item">{a}</div>
+        <li class="action-item">{a}</li>
       ))}
-    </div>
+    </ul>
   </div>
 
   <div class="block-section">
     <h4>Preuves</h4>
-    <div class="block-preuves">
+    <ul class="block-preuves">
       {preuves.map(p => (
-        <div class="preuve card">
+        <li class="preuve-item">
           <span class="preuve-client">{p.client}</span>
-          <p class="preuve-detail">{p.detail}</p>
-        </div>
+          <span class="preuve-detail">{p.detail}</span>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </div>
 
@@ -55,7 +55,6 @@ const { title, accroche, actions, preuves } = Astro.props;
     color: var(--color-text);
     font-size: 1.05rem;
     line-height: 1.7;
-    max-width: 70ch;
     margin-bottom: 2.5rem;
   }
 
@@ -77,48 +76,69 @@ const { title, accroche, actions, preuves } = Astro.props;
   }
 
   .block-actions {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-left: 0;
+  }
+
+  .action-item {
+    padding-left: 1.25rem;
+    position: relative;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .action-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary);
+  }
+
+  .block-preuves {
+    list-style: none;
+    padding-left: 0;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
   }
 
-  .action-item {
-    padding: 0.85rem 1.25rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    color: var(--color-text);
+  .preuve-item {
+    padding-left: 1.25rem;
+    position: relative;
     font-size: 0.95rem;
     line-height: 1.6;
-    transition: all var(--transition-base);
   }
 
-  .action-item:hover {
-    background: var(--color-surface-hover);
-    border-color: var(--color-border-hover);
-  }
-
-  .block-preuves {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-  }
-
-  .preuve {
+  .preuve-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary);
   }
 
   .preuve-client {
     font-family: var(--font-heading);
-    font-size: 0.95rem;
     color: var(--color-primary);
-    display: block;
-    margin-bottom: 0.5rem;
+    margin-right: 0.4rem;
+  }
+
+  .preuve-client::after {
+    content: ' \2014  ';
   }
 
   .preuve-detail {
-    color: var(--color-text-muted);
-    font-size: 0.92rem;
-    line-height: 1.6;
-    margin: 0;
+    color: var(--color-text);
   }
 </style>

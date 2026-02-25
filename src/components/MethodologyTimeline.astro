@@ -1,0 +1,316 @@
+---
+interface Step {
+  time: string;
+  title: string;
+  description: string;
+  details: string[];
+  icon: string;
+}
+
+const steps: Step[] = [
+  {
+    time: "J+1",
+    title: "Immersion",
+    description: "Prise de poste immédiate, sans période d'observation.",
+    details: [
+      "Rencontre des équipes clés et stakeholders",
+      "Audit flash des enjeux critiques",
+      "Identification des risques immédiats",
+    ],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+  },
+  {
+    time: "Semaine 1",
+    title: "Diagnostic",
+    description: "Cartographie complète et plan d'action structuré.",
+    details: [
+      "Analyse des processus et de la dette technique",
+      "Quick wins identifiés et priorisés",
+      "Roadmap 90 jours validée avec la direction",
+    ],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>',
+  },
+  {
+    time: "Semaines 2-4",
+    title: "Quick wins",
+    description: "Premiers résultats visibles et crédibilité établie.",
+    details: [
+      "Process critiques sécurisés",
+      "Équipe réalignée sur les priorités",
+      "Métriques de suivi en place",
+    ],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+  },
+  {
+    time: "Mois 2-6",
+    title: "Transformation",
+    description: "Exécution du plan, delivery continue.",
+    details: [
+      "Déploiement de la roadmap produit ou data",
+      "KPIs opérationnels suivis en continu",
+      "Montée en compétence des équipes",
+    ],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+  },
+  {
+    time: "Mois 6+",
+    title: "Passation",
+    description: "Transfert organisé, autonomie assurée.",
+    details: [
+      "Documentation complète des process",
+      "Transfert de compétences formalisé",
+      "Recrutement et onboarding du successeur",
+    ],
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  },
+];
+---
+
+<div class="methodology-scroll">
+  <div class="methodology-timeline">
+    {steps.map((step, i) => (
+      <div class="tl-step">
+        <!-- Timeline node -->
+        <div class="tl-node-area">
+          <span class="tl-time">{step.time}</span>
+          <div class="tl-node">
+            <span class="tl-icon" set:html={step.icon} />
+          </div>
+          {i < steps.length - 1 && <div class="tl-connector" />}
+        </div>
+
+        <!-- Stem from node to card -->
+        <div class="tl-stem"></div>
+
+        <!-- Card legend -->
+        <div class="tl-card">
+          <h3 class="tl-title">{step.title}</h3>
+          <p class="tl-desc">{step.description}</p>
+          <ul class="tl-details">
+            {step.details.map(d => (
+              <li>{d}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .methodology-scroll {
+    overflow-x: auto;
+    padding: 1rem 0 0.5rem;
+  }
+
+  .methodology-timeline {
+    display: flex;
+    min-width: 1000px;
+    gap: 1.5rem;
+  }
+
+  .tl-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ---- Node area (badge + circle + connector) ---- */
+  .tl-node-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    position: relative;
+    width: 100%;
+  }
+
+  .tl-time {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    color: var(--color-primary);
+    letter-spacing: 0.06em;
+    background: rgba(0, 153, 255, 0.1);
+    border: 1px solid rgba(0, 153, 255, 0.2);
+    border-radius: 20px;
+    padding: 0.25rem 0.85rem;
+    white-space: nowrap;
+  }
+
+  .tl-node {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 2px solid var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 28px rgba(0, 153, 255, 0.15), inset 0 0 20px rgba(0, 153, 255, 0.1);
+    transition: all var(--transition-base);
+  }
+
+  .tl-step:hover .tl-node {
+    box-shadow: 0 0 36px rgba(0, 153, 255, 0.3), inset 0 0 24px rgba(0, 153, 255, 0.15);
+  }
+
+  .tl-icon {
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+  }
+
+  .tl-icon :global(svg) {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  /* Horizontal connector between nodes */
+  .tl-connector {
+    position: absolute;
+    bottom: 36px;
+    left: calc(50% + 38px);
+    width: calc(100% + 1.5rem - 76px);
+    height: 2px;
+    background: var(--color-primary);
+    z-index: 0;
+  }
+
+  /* ---- Vertical stem from node to card ---- */
+  .tl-stem {
+    width: 2px;
+    height: 2rem;
+    background: linear-gradient(180deg, var(--color-primary), rgba(0, 153, 255, 0.15));
+  }
+
+  /* ---- Card ---- */
+  .tl-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.25rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex-grow: 1;
+    transition: all var(--transition-base);
+  }
+
+  .tl-step:hover .tl-card {
+    border-color: var(--color-border-hover);
+    background: var(--color-surface-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .tl-title {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .tl-desc {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+  }
+
+  .tl-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    flex-grow: 1;
+  }
+
+  .tl-details li {
+    padding-left: 1.1rem;
+    position: relative;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .tl-details li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-primary);
+  }
+
+  /* ---- Mobile: vertical ---- */
+  @media (max-width: 768px) {
+    .methodology-scroll {
+      overflow-x: visible;
+    }
+
+    .methodology-timeline {
+      flex-direction: column;
+      min-width: auto;
+      gap: 0;
+    }
+
+    .tl-step {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .tl-node-area {
+      flex-shrink: 0;
+      width: auto;
+    }
+
+    .tl-node {
+      width: 56px;
+      height: 56px;
+    }
+
+    .tl-icon :global(svg) {
+      width: 24px;
+      height: 24px;
+    }
+
+    .tl-connector {
+      position: absolute;
+      top: calc(100% + 0.6rem);
+      left: 50%;
+      right: auto;
+      bottom: auto;
+      width: 2px;
+      height: 3rem;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, var(--color-primary), rgba(0, 153, 255, 0.2));
+    }
+
+    .tl-stem {
+      display: none;
+    }
+
+    .tl-card {
+      margin-bottom: 2.5rem;
+    }
+
+    .tl-time {
+      font-size: 0.75rem;
+    }
+  }
+</style>

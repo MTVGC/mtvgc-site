@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -12,6 +13,10 @@ const {
   title,
   description = "Management de transition Produit & Data pour fintech et wealthtech Série A-C - MTV Global Consulting"
 } = Astro.props;
+
+const siteUrl = Astro.site?.origin || 'https://mtvglobalconsulting.com';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = `${siteUrl}/images/logo/logo-color.png`;
 ---
 
 <!DOCTYPE html>
@@ -20,6 +25,12 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png" />
@@ -31,8 +42,18 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalUrl} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`${title} | MTV Global Consulting`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <title>{title} | MTV Global Consulting</title>
+
+    <ViewTransitions />
   </head>
   <body>
     <Header />

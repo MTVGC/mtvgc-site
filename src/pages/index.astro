@@ -3,22 +3,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSection from '../components/HeroSection.astro';
 import SituationCard from '../components/SituationCard.astro';
 import MissionCard from '../components/MissionCard.astro';
+import MethodologyTimeline from '../components/MethodologyTimeline.astro';
 ---
 
 <BaseLayout title="Management de transition Produit & Data">
 
   <HeroSection
-    preTitle="MTV Global Consulting"
-    title='Management de transition Produit & Data &#183;<br /><span class="text-gradient">opérationnel J+1</span>'
-    subtitle="Fintech & wealthtech Série A-C. Vacance de poste, levée de fonds, risque réglementaire. Diagnostic semaine 2, delivery immédiat."
-    ctaText="Parler de votre situation"
+    title='Management de transition<br /><span class="text-gradient">Produit & Data</span>'
+    tagline="Quand l'urgence exige l'excellence."
+    subtitle='J&rsquo;interviens quand le leadership produit &amp; data ne peut plus attendre.<br><span class="hero-situations">Vacance critique &mdash; Levée à sécuriser &mdash; Conformité sous pression.</span><br><span class="hero-promise">Opérationnel J+1. Premiers résultats dès semaine 2.</span>'
+    ctaText="Parlons de votre situation"
     ctaHref="/contact"
     ctaSecondaryText="Voir les missions"
     ctaSecondaryHref="/missions"
     metrics={[
       { value: "-96%", label: "KYC 48h à 2h" },
-      { value: "0", label: "Incident AMF/ACPR" },
-      { value: "8", label: "Missions" },
+      { value: "4j à 4min", label: "Reporting" },
+      { value: "8", label: "Missions livrées" },
       { value: "12 ans", label: "Expérience" },
     ]}
   />
@@ -26,25 +27,25 @@ import MissionCard from '../components/MissionCard.astro';
   <!-- Situations d'intervention -->
   <section class="section section-alt">
     <div class="container">
-      <h2 class="section-title">Quand intervenir</h2>
+      <h2 class="section-title">Situations d'intervention</h2>
       <p class="section-subtitle">
         Trois situations où un management de transition change la donne.
       </p>
       <div class="grid-3">
         <SituationCard
-          icon="&#9673;"
+          icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>'
           title="Absence de leadership Produit & Data"
           description="Départ brutal, transformation sans pilote, équipe en forte croissance. L'organisation avance sans cap produit ou data - opérationnel J+1."
           link="/situations"
         />
         <SituationCard
-          icon="&#9650;"
+          icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>'
           title="Avant levée de fonds"
           description="POC IA à livrer, roadmap investisseurs à structurer, deadline non négociable."
           link="/situations"
         />
         <SituationCard
-          icon="&#9670;"
+          icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>'
           title="Risque réglementaire"
           description="AMF, ACPR, GDPR. Audit, remédiation, 0 incident."
           link="/situations"
@@ -53,45 +54,74 @@ import MissionCard from '../components/MissionCard.astro';
     </div>
   </section>
 
-  <!-- Missions (aperçu) -->
+  <!-- Methodologie -->
   <section class="section">
+    <div class="container">
+      <h2 class="section-title">Ma méthodologie</h2>
+      <p class="section-subtitle">
+        Un cadre éprouvé, adapté à chaque contexte. De l'immersion à la passation.
+      </p>
+      <MethodologyTimeline />
+    </div>
+  </section>
+
+  <!-- Missions (aperçu) -->
+  <section class="section section-alt">
     <div class="container">
       <h2 class="section-title">Missions récentes</h2>
       <p class="section-subtitle">
         Résultats mesurables sur des missions de 6 à 18 mois.
       </p>
-      <div class="grid-3 missions-grid">
+      <div class="grid-3">
         <MissionCard
           client="Family Partners"
-          sector="Wealthtech / Family Office"
-          role="Head of Product & Data (transition)"
-          description="Structuration produit de 0 à 3 produits lancés, dont un POC IA pour préparer la Série A."
+          sector="Wealthtech"
+          role="Chief Product & Technology Officer"
+          highlights={[
+            "Aucune structure produit à l'arrivée",
+            "Levée Série A à préparer",
+            "3 produits propriétaires from scratch",
+            "POC IA démonstrateur investisseurs",
+          ]}
           metrics={[
             { value: "0 à 3", label: "Produits lancés" },
-            { value: "POC IA", label: "Série A" },
-            { value: "10 mois", label: "Durée mission" },
+            { value: "POC IA", label: "Démonstrateur Série A" },
+            { value: "72h à 24h", label: "Reporting" },
+            { value: "Conforme", label: "Réglementaire" },
           ]}
         />
         <MissionCard
           client="Anaxago"
           sector="Fintech"
-          role="Head of Product & Data (transition)"
-          description="Refonte du parcours KYC, mise en conformité AMF/ACPR, stabilisation plateforme."
+          role="Chief Digital Officer"
+          highlights={[
+            "Aucun CPTO, équipe de 12 sans cap",
+            "Conformité AMF/ACPR à risque",
+            "Refonte complète du parcours KYC",
+            "Déploiement ML scoring",
+          ]}
           metrics={[
-            { value: "48h à 2h", label: "KYC" },
-            { value: "0 incident", label: "AMF/ACPR 14 mois" },
-            { value: "85% à 98%", label: "Disponibilité" },
+            { value: "-96%", label: "KYC 48h à 2h" },
+            { value: "80%", label: "Approbations auto" },
+            { value: "AUC 0.87", label: "ML scoring" },
+            { value: "Conforme", label: "AMF/ACPR 14 mois" },
           ]}
         />
         <MissionCard
           client="Lucky Cart"
           sector="Retail Tech / IA"
-          role="VP Product (transition)"
-          description="Lancement offre data monétisation, structuration de 4 squads produit, croissance ARR."
+          role="Head of Product"
+          highlights={[
+            "Moteur de recommandation IA 0-to-1",
+            "4 squads, 8 retailers, 2M+ utilisateurs",
+            "Offre data monétisation",
+            "Adoption nationale Intermarché",
+          ]}
           metrics={[
-            { value: "120k EUR", label: "ARR en 4 mois" },
+            { value: "120k EUR", label: "ARR en 6 mois" },
             { value: "4 squads", label: "Structurées" },
             { value: "-33%", label: "Lead time" },
+            { value: "4.2/5", label: "Satisfaction client" },
           ]}
         />
       </div>
@@ -102,23 +132,19 @@ import MissionCard from '../components/MissionCard.astro';
   </section>
 
   <!-- CTA final -->
-  <section class="section section-alt cta-final">
+  <section class="section cta-final">
     <div class="container cta-final-inner">
       <h2>Votre situation ressemble à l'une de ces missions ?</h2>
       <p class="section-subtitle">
         Premier échange sans engagement. Je reviens sous 24h.
       </p>
-      <a href="/contact" class="btn btn-primary">Parler de votre situation</a>
+      <a href="/contact" class="btn btn-primary">Parlons de votre situation</a>
     </div>
   </section>
 
 </BaseLayout>
 
 <style>
-  .missions-grid {
-    margin-bottom: 0;
-  }
-
   .section-cta {
     text-align: center;
     margin-top: 2.5rem;

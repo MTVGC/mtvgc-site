@@ -20,18 +20,12 @@ import SituationBlock from '../components/SituationBlock.astro';
     <div class="container situations-content">
 
       <div class="tabs" role="tablist">
-        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-leadership" data-tab="tab-leadership">
-          Absence de leadership
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-levee" data-tab="tab-levee">
-          Avant levée de fonds
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-reglementaire" data-tab="tab-reglementaire">
-          Risque réglementaire
-        </button>
+        <button class="tab-btn tab-btn--active" role="tab" id="tab-0" data-tab="0" aria-selected="true" aria-controls="panel-0">Absence de leadership</button>
+        <button class="tab-btn" role="tab" id="tab-1" data-tab="1" aria-selected="false" aria-controls="panel-1">Levée de fonds</button>
+        <button class="tab-btn" role="tab" id="tab-2" data-tab="2" aria-selected="false" aria-controls="panel-2">Risque réglementaire</button>
       </div>
 
-      <div id="tab-leadership" class="tab-panel active" role="tabpanel">
+      <div class="tab-panel tab-panel--active" role="tabpanel" id="panel-0" data-panel="0" aria-labelledby="tab-0">
         <SituationBlock
           title="Absence de leadership Produit & Data"
           accroche="Départ brutal d'un responsable, programme de transformation sans pilote, équipe en forte croissance qui a besoin d'être structurée avant de déraper. Dans tous ces cas, l'organisation avance sans cap produit ou data - et chaque semaine sans leadership coûte."
@@ -50,7 +44,7 @@ import SituationBlock from '../components/SituationBlock.astro';
         />
       </div>
 
-      <div id="tab-levee" class="tab-panel" role="tabpanel">
+      <div class="tab-panel" role="tabpanel" id="panel-1" data-panel="1" aria-labelledby="tab-1">
         <SituationBlock
           title="Avant levée de fonds"
           accroche="Votre Série A approche. Les investisseurs attendent une démonstration produit ou data convaincante. La deadline ne bouge pas."
@@ -67,7 +61,7 @@ import SituationBlock from '../components/SituationBlock.astro';
         />
       </div>
 
-      <div id="tab-reglementaire" class="tab-panel" role="tabpanel">
+      <div class="tab-panel" role="tabpanel" id="panel-2" data-panel="2" aria-labelledby="tab-2">
         <SituationBlock
           title="Risque réglementaire"
           accroche="AMF, ACPR, GDPR. Un audit approche, une non-conformité a été identifiée, ou votre architecture data n'est pas documentée. Le risque est réel."
@@ -95,57 +89,60 @@ import SituationBlock from '../components/SituationBlock.astro';
       <p class="section-subtitle">
         Décrivez-la moi en 3 lignes. Je reviens sous 24h - sans engagement.
       </p>
-      <a href="/contact" class="btn btn-primary">Parler de votre situation</a>
+      <a href="/contact" class="btn btn-primary">Parlons de votre situation</a>
     </div>
   </section>
 
 </BaseLayout>
 
-<script>
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tabId = btn.getAttribute('data-tab');
-      if (!tabId) return;
-
-      // Update buttons
-      btn.closest('.tabs')?.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-
-      // Update panels
-      const container = btn.closest('.tabs')?.parentElement;
-      container?.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      container?.querySelector(`#${tabId}`)?.classList.add('active');
-    });
-  });
-</script>
-
 <style>
-  .hero-sm {
-    padding: 9rem 0 3rem;
-  }
-
-  .hero-pre {
-    color: var(--color-primary);
-    font-family: var(--font-heading);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 1rem;
-  }
-
-  .hero-sub {
-    color: var(--color-text-muted);
-    font-size: 1.05rem;
-    max-width: 550px;
-    margin-top: 0.75rem;
-  }
-
   .situations-content {
     max-width: 960px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .tab-btn:hover {
+    color: var(--color-text);
+    border-color: var(--color-border-hover);
+  }
+
+  .tab-btn--active {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: var(--color-accent-glow);
+  }
+
+  .tab-panel {
+    display: none;
+  }
+
+  .tab-panel--active {
+    display: block;
+    animation: tabFadeIn 300ms ease;
+  }
+
+  @keyframes tabFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .cta-section {
@@ -162,3 +159,31 @@ import SituationBlock from '../components/SituationBlock.astro';
     margin-top: 0.5rem;
   }
 </style>
+
+<script>
+  function initTabs() {
+    const tablist = document.querySelector('.tabs[role="tablist"]');
+    if (!tablist || (tablist as any)._tabsInit) return;
+    (tablist as any)._tabsInit = true;
+
+    const tabs = tablist.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const index = tab.getAttribute('data-tab');
+        tabs.forEach(t => {
+          t.classList.remove('tab-btn--active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        panels.forEach(p => p.classList.remove('tab-panel--active'));
+        tab.classList.add('tab-btn--active');
+        tab.setAttribute('aria-selected', 'true');
+        document.querySelector(`[data-panel="${index}"]`)?.classList.add('tab-panel--active');
+      });
+    });
+  }
+
+  initTabs();
+  document.addEventListener('astro:after-swap', initTabs);
+</script>

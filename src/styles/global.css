@@ -1,7 +1,6 @@
 /* ===== MTV Global Consulting - Global Styles ===== */
 
-/* --- Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto+Slab:wght@300;400;500;700&display=swap');
+/* --- Fonts loaded via <link> in BaseLayout.astro --- */
 
 /* --- CSS Variables --- */
 :root {
@@ -23,13 +22,13 @@
   --color-border-hover: #333333;
 
   --font-heading: 'Alata', sans-serif;
-  --font-body: 'Roboto Slab', serif;
+  --font-body: 'Inter', sans-serif;
 
   --color-surface-alt: #111111;
 
-  --section-padding: 5rem 0;
+  --section-padding: 4.5rem 0;
   --container-max: 1280px;
-  --container-padding: 0 2rem;
+  --container-padding: 0 3rem;
 
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
@@ -56,7 +55,7 @@ html {
 body {
   font-family: var(--font-body);
   font-size: 1.05rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
   color: var(--color-text);
   background-color: var(--color-bg);
@@ -77,7 +76,7 @@ h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); }
 
 p {
   margin-bottom: 1rem;
-  max-width: 65ch;
+  max-width: none;
 }
 
 a {
@@ -108,8 +107,8 @@ a:hover {
 .section-subtitle {
   color: var(--color-text-muted);
   font-size: 1.15rem;
-  margin-bottom: 2.5rem;
-  max-width: 55ch;
+  margin-bottom: 2rem;
+  max-width: none;
 }
 
 /* --- Buttons --- */
@@ -176,8 +175,14 @@ a:hover {
 
 .grid-3 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* --- Tags --- */
@@ -189,6 +194,27 @@ a:hover {
   border-radius: 20px;
   font-size: 0.85rem;
   font-family: var(--font-heading);
+}
+
+/* --- Hero Small (sub-pages) --- */
+.hero-sm {
+  padding: 7rem 0 2.5rem;
+}
+
+.hero-pre {
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+}
+
+.hero-sub {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  max-width: 580px;
+  margin-top: 0.75rem;
 }
 
 /* --- Utility --- */
@@ -206,59 +232,6 @@ a:hover {
 /* --- Section alternée --- */
 .section-alt {
   background: var(--color-surface-alt);
-}
-
-/* --- Tabs --- */
-.tabs {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 3rem;
-  padding: 0.35rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  overflow-x: auto;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 1rem 1.75rem;
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  color: var(--color-text-muted);
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--transition-base);
-  white-space: nowrap;
-  text-align: center;
-}
-
-.tab-btn:hover {
-  color: var(--color-text);
-  background: var(--color-surface-hover);
-}
-
-.tab-btn.active {
-  color: var(--color-text-bright);
-  background: linear-gradient(135deg, rgba(0, 153, 255, 0.15), rgba(0, 153, 255, 0.06));
-  border-color: rgba(0, 153, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 153, 255, 0.1);
-}
-
-.tab-panel {
-  display: none;
-}
-
-.tab-panel.active {
-  display: block;
-  animation: tabFadeIn 350ms ease;
-}
-
-@keyframes tabFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .sr-only {

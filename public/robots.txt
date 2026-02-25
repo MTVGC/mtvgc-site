@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mtvglobalconsulting.com/sitemap-index.xml

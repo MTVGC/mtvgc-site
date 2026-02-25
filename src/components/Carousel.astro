@@ -1,0 +1,194 @@
+---
+---
+
+<div class="carousel" data-carousel tabindex="0" role="region" aria-label="Carousel">
+  <div class="carousel-viewport">
+    <div class="carousel-track">
+      <slot />
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-prev" aria-label="Precedent">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="13 4 7 10 13 16" />
+      </svg>
+    </button>
+    <div class="carousel-dots"></div>
+    <button class="carousel-next" aria-label="Suivant">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="7 4 13 10 7 16" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .carousel {
+    width: 100%;
+    position: relative;
+    outline: none;
+  }
+
+  .carousel:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius);
+  }
+
+  .carousel-viewport {
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 400ms ease;
+  }
+
+  .carousel-track > :global(*) {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .carousel-prev,
+  .carousel-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .carousel-prev:hover,
+  .carousel-next:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    box-shadow: 0 0 12px rgba(0, 153, 255, 0.2);
+  }
+
+  .carousel-dots {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .carousel-dots :global(.carousel-dot) {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-border);
+    border: none;
+    cursor: pointer;
+    padding: 16px;
+    background-clip: content-box;
+    transition: background-color var(--transition-fast);
+  }
+
+  .carousel-dots :global(.carousel-dot--active) {
+    background-color: var(--color-primary);
+  }
+</style>
+
+<script>
+  function initCarousels() {
+    document.querySelectorAll('[data-carousel]').forEach(carousel => {
+      if ((carousel as any)._carouselInit) return;
+      (carousel as any)._carouselInit = true;
+
+      // Scoped selectors to avoid grabbing nested carousel elements
+      const track = carousel.querySelector(':scope > .carousel-viewport > .carousel-track') as HTMLElement;
+      const controls = carousel.querySelector(':scope > .carousel-controls') as HTMLElement;
+      const dotsContainer = controls?.querySelector('.carousel-dots') as HTMLElement;
+      const prevBtn = controls?.querySelector('.carousel-prev');
+      const nextBtn = controls?.querySelector('.carousel-next');
+
+      if (!track || !controls) return;
+
+      const slides = Array.from(track.children) as HTMLElement[];
+      const total = slides.length;
+      if (total === 0) return;
+
+      // Hide controls if only 1 slide
+      if (total <= 1) {
+        controls.style.display = 'none';
+        return;
+      }
+
+      let current = 0;
+
+      // Generate dots
+      if (dotsContainer) {
+        for (let i = 0; i < total; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (i === 0 ? ' carousel-dot--active' : '');
+          dot.setAttribute('aria-label', `Slide ${i + 1}`);
+          dot.addEventListener('click', () => goTo(i));
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      const dots = dotsContainer ? Array.from(dotsContainer.children) : [];
+
+      function goTo(index: number) {
+        if (index < 0) index = total - 1;
+        if (index >= total) index = 0;
+        current = index;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, i) => {
+          d.classList.toggle('carousel-dot--active', i === current);
+        });
+      }
+
+      prevBtn?.addEventListener('click', () => goTo(current - 1));
+      nextBtn?.addEventListener('click', () => goTo(current + 1));
+
+      // Keyboard navigation
+      carousel.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      });
+
+      // Touch swipe (with nested carousel isolation)
+      let touchStartX = 0;
+      let touchActive = false;
+
+      carousel.addEventListener('touchstart', (e: TouchEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('[data-carousel]') !== carousel) {
+          touchActive = false;
+          return;
+        }
+        touchActive = true;
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', (e: TouchEvent) => {
+        if (!touchActive) return;
+        touchActive = false;
+        const touchEndX = e.changedTouches[0].screenX;
+        const delta = touchStartX - touchEndX;
+        if (Math.abs(delta) > 50) {
+          if (delta > 0) goTo(current + 1);
+          else goTo(current - 1);
+        }
+      }, { passive: true });
+    });
+  }
+
+  // Run on initial load and on each View Transitions navigation
+  initCarousels();
+  document.addEventListener('astro:after-swap', initCarousels);
+</script>

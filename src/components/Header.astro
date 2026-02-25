@@ -1,18 +1,14 @@
 ---
-const currentPath = Astro.url.pathname;
+import { navLinks } from '../data/nav';
 
-const navLinks = [
-  { href: '/situations', label: 'Situations' },
-  { href: '/missions', label: 'Missions' },
-  { href: '/about', label: 'À propos' },
-  { href: '/contact', label: 'Contact' },
-];
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="header">
   <div class="container header-inner">
     <a href="/" class="logo-link" aria-label="MTV Global Consulting - Accueil">
-      <img src="/images/logo/logo-white.svg" alt="MTV Global Consulting" class="logo" />
+      <img src="/images/logo/symbol-blue.svg" alt="MTV Global Consulting" class="logo" />
+      <span class="logo-text">MTV GLOBAL CONSULTING <span class="logo-sep">|</span> <span class="logo-slogan">TOMORROW'S SOLUTIONS, TODAY'S INNOVATION</span></span>
     </a>
 
     <nav class="nav" aria-label="Navigation principale">
@@ -21,7 +17,7 @@ const navLinks = [
           <li>
             <a
               href={link.href}
-              class:list={['nav-link', { active: currentPath.startsWith(link.href) }]}
+              class:list={['nav-link', { active: link.href === '/' ? currentPath === '/' : currentPath.startsWith(link.href) }]}
             >
               {link.label}
             </a>
@@ -54,17 +50,35 @@ const navLinks = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 72px;
+    height: 80px;
   }
 
   .logo-link {
     display: flex;
     align-items: center;
+    gap: 0.75rem;
   }
 
   .logo {
-    height: 36px;
+    height: 40px;
     width: auto;
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    color: var(--color-text-bright);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .logo-sep {
+    color: var(--color-primary);
+    margin: 0 0.4rem;
+  }
+
+  .logo-slogan {
+    color: var(--color-text-muted);
   }
 
   .nav-list {
@@ -107,7 +121,7 @@ const navLinks = [
   .menu-toggle {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
@@ -120,9 +134,35 @@ const navLinks = [
     height: 2px;
     background: var(--color-text);
     transition: all var(--transition-base);
+    transform-origin: center;
+  }
+
+  /* Hamburger -> X animation */
+  .menu-toggle.open .menu-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .menu-toggle.open .menu-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.open .menu-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 
   @media (max-width: 768px) {
+    .header-inner {
+      height: 72px;
+    }
+
+    .logo {
+      height: 36px;
+    }
+
+    .logo-text {
+      display: none;
+    }
+
     .menu-toggle {
       display: flex;
     }
@@ -159,18 +199,29 @@ const navLinks = [
 </style>
 
 <script>
-  const toggle = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.nav');
+  function initHeader() {
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    if (!toggle || !nav || (toggle as any)._headerInit) return;
+    (toggle as any)._headerInit = true;
 
-  toggle?.addEventListener('click', () => {
-    const isOpen = nav?.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(isOpen));
-  });
-
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      nav?.classList.remove('open');
-      toggle?.setAttribute('aria-expanded', 'false');
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      toggle.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
     });
-  });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Ouvrir le menu');
+      });
+    });
+  }
+
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
 </script>
