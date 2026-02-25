@@ -11,7 +11,7 @@ const steps: Step[] = [
   {
     time: "J+1",
     title: "Immersion",
-    description: "Prise de poste immédiate, sans période d'observation.",
+    description: "Prise de poste opérationnelle immédiate.",
     details: [
       "Rencontre des équipes clés et stakeholders",
       "Audit flash des enjeux critiques",
@@ -82,15 +82,22 @@ const steps: Step[] = [
         <!-- Stem from node to card -->
         <div class="tl-stem"></div>
 
-        <!-- Card legend -->
-        <div class="tl-card">
-          <h3 class="tl-title">{step.title}</h3>
-          <p class="tl-desc">{step.description}</p>
-          <ul class="tl-details">
-            {step.details.map(d => (
-              <li>{d}</li>
-            ))}
-          </ul>
+        <!-- Card legend (accordion) -->
+        <div class="tl-card" data-accordion>
+          <div class="tl-card-header">
+            <h3 class="tl-title">{step.title}</h3>
+            <p class="tl-desc">{step.description}</p>
+            <span class="tl-toggle" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+          <div class="tl-details-wrap">
+            <ul class="tl-details">
+              {step.details.map(d => (
+                <li>{d}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     ))}
@@ -153,6 +160,7 @@ const steps: Step[] = [
     transition: all var(--transition-base);
   }
 
+  .tl-card:hover ~ .tl-node,
   .tl-step:hover .tl-node {
     box-shadow: 0 0 36px rgba(0, 153, 255, 0.3), inset 0 0 24px rgba(0, 153, 255, 0.15);
   }
@@ -191,25 +199,39 @@ const steps: Step[] = [
     background: linear-gradient(180deg, var(--color-primary), rgba(0, 153, 255, 0.15));
   }
 
-  /* ---- Card ---- */
+  /* ---- Card (accordion) ---- */
   .tl-card {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: 1.5rem 1.25rem;
+    padding: 1.25rem 1rem;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
     flex-grow: 1;
+    cursor: pointer;
     transition: all var(--transition-base);
   }
 
-  .tl-step:hover .tl-card {
+  .tl-card:hover {
     border-color: var(--color-border-hover);
     background: var(--color-surface-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .tl-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    position: relative;
+  }
+
+  .tl-toggle {
+    color: var(--color-text-muted);
+    transition: transform 0.3s ease;
+    margin-top: 0.25rem;
+  }
+
+  .tl-card.open .tl-toggle {
+    transform: rotate(180deg);
   }
 
   .tl-title {
@@ -218,11 +240,22 @@ const steps: Step[] = [
   }
 
   .tl-desc {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--color-text);
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
     text-align: center;
+  }
+
+  /* Accordion collapsed by default */
+  .tl-details-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .tl-card.open .tl-details-wrap {
+    max-height: 200px;
   }
 
   .tl-details {
@@ -231,25 +264,25 @@ const steps: Step[] = [
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
     padding-top: 0.75rem;
     border-top: 1px solid var(--color-border);
-    flex-grow: 1;
+    margin-top: 0.6rem;
   }
 
   .tl-details li {
     padding-left: 1.1rem;
     position: relative;
     color: var(--color-text-muted);
-    font-size: 0.88rem;
-    line-height: 1.5;
+    font-size: 0.82rem;
+    line-height: 1.4;
   }
 
   .tl-details li::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.55em;
+    top: 0.5em;
     width: 5px;
     height: 5px;
     border-radius: 50%;
@@ -314,3 +347,11 @@ const steps: Step[] = [
     }
   }
 </style>
+
+<script>
+  document.querySelectorAll('[data-accordion]').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('open');
+    });
+  });
+</script>
