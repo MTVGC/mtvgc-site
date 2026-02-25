@@ -33,34 +33,32 @@ const {
 
 <section class="hero">
   <div class="container hero-inner">
-    <!-- Left column: text -->
+    <!-- Row 1: H1 full width -->
+    <div class="hero-heading hero-anim" style="--delay: 0">
+      {preLogo && <img src={preLogo} alt="MTV Global Consulting" class="hero-logo" />}
+      {preTitle && <p class="hero-pre">{preTitle}</p>}
+      <h1 set:html={title} />
+    </div>
+
+    <!-- Row 2 left: tagline + subtitle -->
     <div class="hero-text">
-      <div class="hero-anim" style="--delay: 0">
-        {preLogo && <img src={preLogo} alt="MTV Global Consulting" class="hero-logo" />}
-        {preTitle && <p class="hero-pre">{preTitle}</p>}
-        <h1 set:html={title} />
-      </div>
-
       {tagline && <p class="hero-tagline hero-anim" style="--delay: 1">{tagline}</p>}
-
       {subtitle && <p class="hero-sub hero-anim" set:html={subtitle} style="--delay: 2" />}
     </div>
 
-    <!-- Right column: metrics -->
-    <div class="hero-side">
-      {metrics.length > 0 && (
-        <div class="hero-metrics hero-anim" style="--delay: 3">
-          {metrics.map(m => (
-            <div class="metric">
-              <span class="metric-value">{m.value}</span>
-              <span class="metric-label">{m.label}</span>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <!-- Row 2 right: metrics -->
+    {metrics.length > 0 && (
+      <div class="hero-metrics hero-anim" style="--delay: 3">
+        {metrics.map(m => (
+          <div class="metric">
+            <span class="metric-value">{m.value}</span>
+            <span class="metric-label">{m.label}</span>
+          </div>
+        ))}
+      </div>
+    )}
 
-    <!-- CTAs below both columns -->
+    <!-- Row 3: CTAs full width -->
     {(ctaText || ctaSecondaryText) && (
       <div class="hero-actions hero-anim" style="--delay: 4">
         {ctaText && ctaHref && (
@@ -79,18 +77,16 @@ const {
     padding: 7rem 0 3.5rem;
   }
 
-  /* Two-column layout */
+  /* Grid: 2 columns, 3 rows */
   .hero-inner {
     display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 3rem;
-    align-items: center;
+    grid-template-columns: 1fr 340px;
+    gap: 1.5rem 3rem;
   }
 
-  /* Left column */
-  .hero-text {
-    display: flex;
-    flex-direction: column;
+  /* Row 1: H1 spans full width */
+  .hero-heading {
+    grid-column: 1 / -1;
   }
 
   .hero-logo {
@@ -110,8 +106,14 @@ const {
   }
 
   .hero h1 {
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+  }
+
+  /* Row 2 left: tagline + subtitle */
+  .hero-text {
+    display: flex;
+    flex-direction: column;
   }
 
   .hero-tagline {
@@ -139,15 +141,7 @@ const {
     color: var(--color-text-muted);
   }
 
-  /* Right column */
-  .hero-side {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-  }
-
-  /* Metrics 2x2 grid */
+  /* Row 2 right: metrics 2x2 */
   .hero-metrics {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -156,9 +150,10 @@ const {
     background: linear-gradient(135deg, rgba(0, 153, 255, 0.05), rgba(0, 153, 255, 0.02));
     border: 1px solid rgba(0, 153, 255, 0.12);
     border-radius: var(--radius);
-    width: 100%;
+    align-self: start;
   }
 
+  /* Row 3: CTAs full width */
   .hero-actions {
     grid-column: 1 / -1;
     display: flex;
@@ -214,6 +209,10 @@ const {
       text-align: center;
     }
 
+    .hero-heading {
+      grid-column: 1;
+    }
+
     .hero-text {
       align-items: center;
     }
@@ -228,6 +227,7 @@ const {
     }
 
     .hero-actions {
+      grid-column: 1;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
