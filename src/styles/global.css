@@ -26,7 +26,8 @@
 
   --color-surface-alt: #111111;
 
-  --section-padding: 4.5rem 0;
+  --section-padding: 6rem 0;
+  --section-min-height: 820px;
   --container-max: 1280px;
   --container-padding: 0 3rem;
 
@@ -98,7 +99,12 @@ a:hover {
 
 .section {
   padding: var(--section-padding);
+  min-height: var(--section-min-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 
 .section-title {
   margin-bottom: 0.75rem;
