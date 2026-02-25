@@ -43,7 +43,7 @@ const {
     <!-- Row 2 left: tagline + subtitle -->
     <div class="hero-text">
       {tagline && <p class="hero-tagline hero-anim" style="--delay: 1">{tagline}</p>}
-      {subtitle && <p class="hero-sub hero-anim" set:html={subtitle} style="--delay: 2" />}
+      {subtitle && <div class="hero-sub hero-anim" set:html={subtitle} style="--delay: 2" />}
     </div>
 
     <!-- Row 2 right: metrics -->
@@ -80,7 +80,7 @@ const {
   /* Grid: 2 columns, 3 rows */
   .hero-inner {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: 1fr 300px;
     gap: 2.5rem 3rem;
   }
 
